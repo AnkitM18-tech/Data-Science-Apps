@@ -32,11 +32,11 @@ st.subheader('User Input Parameters')
 st.write(df)
 
 iris= datasets.load_iris()
-X = iris.data
-Y = iris.target 
+X = iris.data      #forefeatures-sepal_length,sepal_width,petal_length,petal_width-input
+Y = iris.target    #0,1,2 - class index number
 
 clf = RandomForestClassifier()
-clf.fit(X,Y)
+clf.fit(X,Y)       #Training Model using X,Y matrices as Input
 
 prediction = clf.predict(df)
 prediction_probability = clf.predict_proba(df)
