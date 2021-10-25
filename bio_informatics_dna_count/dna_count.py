@@ -1,11 +1,14 @@
 #Import Libraries
+import os
 import pandas as pd
 import streamlit as stl
 import altair as alt
 from PIL import Image
 
 #Page Title
-image = Image.open('dna-logo.jpg')
+path = os.path.dirname(__file__)
+my_file = path+'/dna-logo.jpg'
+image = Image.open(my_file)
 
 stl.image(image,use_column_width=True)
 
