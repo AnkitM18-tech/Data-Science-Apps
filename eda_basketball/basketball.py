@@ -71,4 +71,4 @@ if stl.button('Intercorrelation HeatMap'):
     with sns.axes_style("white"):
         f,ax = plt.subplot(figsize=(7,5))
         ax = sns.heatmap(corr,mask=mask,vmax=1,square=True)
-    stl.pyplot(f)
+    stl.pyplot()
