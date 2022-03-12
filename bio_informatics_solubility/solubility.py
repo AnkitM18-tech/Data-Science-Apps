@@ -53,7 +53,7 @@ def generate(smiles, verbose=False):
     return descriptors
 
 # Page Title
-image = Image.open('solubility-logo.jpg')
+image = Image.open('bio_informatics_solubility/solubility-logo.jpg')
 
 st.image(image, use_column_width=True)
 
