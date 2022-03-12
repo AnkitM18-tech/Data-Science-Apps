@@ -88,7 +88,7 @@ X[1:] # Skips the dummy first item
 # Pre-built model
 
 # Reads in saved model
-load_model = pickle.load(open('solubility_model.pkl', 'rb'))
+load_model = pickle.load(open('bio_informatics_solubility/solubility_model.pkl', 'rb'))
 
 # Apply model to make predictions
 prediction = load_model.predict(X)
