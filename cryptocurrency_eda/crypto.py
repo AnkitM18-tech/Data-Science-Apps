@@ -1,4 +1,4 @@
-#Importing Libraries
+# This app is for educational purpose only. Insights gained is not financial advice. Use at your own risk!
 import streamlit as st
 from PIL import Image
 import pandas as pd
@@ -8,35 +8,43 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import time
+#---------------------------------#
+# New feature (make sure to upgrade your streamlit library)
+# pip install --upgrade streamlit
 
+#---------------------------------#
 # Page layout
 ## Page expands to full width
 st.set_page_config(layout="wide")
-
+#---------------------------------#
 # Title
 
-image = Image.open('cryptocurrency_eda/logo.jpg')
+image = Image.open('logo.jpg')
 
 st.image(image, width = 500)
 
 st.title('Crypto Price App')
 st.markdown("""
-App retrieves cryptocurrency prices for the top 100 cryptocurrency from the **CoinMarketCap**!
-""")
+This app retrieves cryptocurrency prices for the top 100 cryptocurrency from the **CoinMarketCap**!
 
+""")
+#---------------------------------#
 # About
-expander_bar = st.expander("About")
+expander_bar = st.beta_expander("About")
 expander_bar.markdown("""
 * **Python libraries:** base64, pandas, streamlit, numpy, matplotlib, seaborn, BeautifulSoup, requests, json, time
 * **Data source:** [CoinMarketCap](http://coinmarketcap.com).
-* **Credit:** Web scraper adapted from the Medium article *[Web Scraping Crypto Prices With Python](https://towardsdatascience.com/web-scraping-crypto-prices-with-python-41072ea5b5bf)
+* **Credit:** Web scraper adapted from the Medium article *[Web Scraping Crypto Prices With Python](https://towardsdatascience.com/web-scraping-crypto-prices-with-python-41072ea5b5bf)* written by [Bryan Feng](https://medium.com/@bryanf).
 """)
 
+
+#---------------------------------#
 # Page layout (continued)
 ## Divide page to 3 columns (col1 = sidebar, col2 and col3 = page contents)
 col1 = st.sidebar
-col2, col3 = st.columns((2,1))
+col2, col3 = st.beta_columns((2,1))
 
+#---------------------------------#
 # Sidebar + Main panel
 col1.header('Input Options')
 
@@ -44,7 +52,7 @@ col1.header('Input Options')
 currency_price_unit = col1.selectbox('Select currency for price', ('USD', 'BTC', 'ETH'))
 
 # Web scraping of CoinMarketCap data
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_data():
     cmc = requests.get('https://coinmarketcap.com')
     soup = BeautifulSoup(cmc.content, 'html.parser')
@@ -54,7 +62,7 @@ def load_data():
     coin_data = json.loads(data.contents[0])
     listings = coin_data['props']['initialState']['cryptocurrency']['listingLatest']['data']
     for i in listings:
-      coins[str(i['id'])] = i['slug']
+        coins[str(i['id'])] = i['slug']
 
     coin_name = []
     coin_symbol = []
@@ -66,14 +74,14 @@ def load_data():
     volume_24h = []
 
     for i in listings:
-      coin_name.append(i['slug'])
-      coin_symbol.append(i['symbol'])
-      price.append(i['quote'][currency_price_unit]['price'])
-      percent_change_1h.append(i['quote'][currency_price_unit]['percent_change_1h'])
-      percent_change_24h.append(i['quote'][currency_price_unit]['percent_change_24h'])
-      percent_change_7d.append(i['quote'][currency_price_unit]['percent_change_7d'])
-      market_cap.append(i['quote'][currency_price_unit]['market_cap'])
-      volume_24h.append(i['quote'][currency_price_unit]['volume_24h'])
+        coin_name.append(i['slug'])
+        coin_symbol.append(i['symbol'])
+        price.append(i['quote'][currency_price_unit]['price'])
+        percent_change_1h.append(i['quote'][currency_price_unit]['percent_change_1h'])
+        percent_change_24h.append(i['quote'][currency_price_unit]['percent_change_24h'])
+        percent_change_7d.append(i['quote'][currency_price_unit]['percent_change_7d'])
+        market_cap.append(i['quote'][currency_price_unit]['market_cap'])
+        volume_24h.append(i['quote'][currency_price_unit]['volume_24h'])
 
     df = pd.DataFrame(columns=['coin_name', 'coin_symbol', 'market_cap', 'percent_change_1h', 'percent_change_24h', 'percent_change_7d', 'price', 'volume_24h'])
     df['coin_name'] = coin_name
@@ -113,6 +121,7 @@ col2.write('Data Dimension: ' + str(df_selected_coin.shape[0]) + ' rows and ' + 
 col2.dataframe(df_coins)
 
 # Download CSV data
+# https://discuss.streamlit.io/t/how-to-download-file-in-streamlit/1806
 def filedownload(df):
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()  # strings <-> bytes conversions
@@ -121,6 +130,7 @@ def filedownload(df):
 
 col2.markdown(filedownload(df_selected_coin), unsafe_allow_html=True)
 
+#---------------------------------#
 # Preparing data for Bar plot of % Price change
 col2.subheader('Table of % Price Change')
 df_change = pd.concat([df_coins.coin_symbol, df_coins.percent_change_1h, df_coins.percent_change_24h, df_coins.percent_change_7d], axis=1)
