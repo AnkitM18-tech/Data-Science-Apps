@@ -35,7 +35,7 @@ expander_bar.markdown("""
 # Page layout (continued)
 ## Divide page to 3 columns (col1 = sidebar, col2 and col3 = page contents)
 col1 = st.sidebar
-col2, col3 = st.columns((2,1))
+col2, col3 = st.beta_columns((2,1))
 
 # Sidebar + Main panel
 col1.header('Input Options')
