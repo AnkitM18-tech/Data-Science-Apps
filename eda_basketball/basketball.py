@@ -69,6 +69,6 @@ if stl.button('Intercorrelation HeatMap'):
     mask = np.zeros_like(corr)
     mask[np.triu_indices_from(mask)] = True
     with sns.axes_style("white"):
-        f,ax = plt.subplot(figsize=(7,5))
+        f,ax = plt.subplots(figsize=(7,5))
         ax = sns.heatmap(corr,mask=mask,vmax=1,square=True)
     stl.pyplot()
