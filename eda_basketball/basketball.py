@@ -43,11 +43,11 @@ df_selected_team = playerstats[(playerstats.Tm.isin(selected_team)) & (playersta
 
 stl.header('Display Player Stats of Selected Team(s)')
 stl.write('Data Dimension: ' + str(df_selected_team.shape[0]) + ' rows and ' + str(df_selected_team.shape[1]) + ' columns.')
-# df_selected_team['FG%'] = df_selected_team['FG%'].astype(bytes)
-# df_selected_team['3P%'] = df_selected_team['3P%'].astype(bytes)
-# df_selected_team['2P%'] = df_selected_team['2P%'].astype(bytes)
-# df_selected_team['eFG%'] = df_selected_team['eFG%'].astype(bytes)
-# df_selected_team['FT%'] = df_selected_team['FT%'].astype(bytes)
+df_selected_team['FG%'] = df_selected_team['FG%'].astype(bytes)
+df_selected_team['3P%'] = df_selected_team['3P%'].astype(bytes)
+df_selected_team['2P%'] = df_selected_team['2P%'].astype(bytes)
+df_selected_team['eFG%'] = df_selected_team['eFG%'].astype(bytes)
+df_selected_team['FT%'] = df_selected_team['FT%'].astype(bytes)
 stl.dataframe(df_selected_team)
 
 #Download NBA Player stats data
