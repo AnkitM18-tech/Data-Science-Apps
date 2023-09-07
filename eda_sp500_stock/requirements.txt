@@ -52,10 +52,10 @@ nbconvert==6.1.0
 nbformat==5.1.3
 nest-asyncio==1.5.1
 notebook==6.4.4
-numba==0.54.0
+numba
 numpy
 packaging==21.0
-pandas==2.1.0
+pandas
 pandocfilters==1.5.0
 parso==0.8.2
 pickleshare==0.7.5
