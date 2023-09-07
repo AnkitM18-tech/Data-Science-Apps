@@ -66,7 +66,7 @@ def price_plot(symbol):
     df = pd.DataFrame(data[symbol].Close)
     df['Date'] = df.index
     plt.fill_between(df.Date, df.Close, color='skyblue', alpha=0.3)
-    plt.plot(df.Date, df.Close, color='skyblue', alpha=0.8)
+    plt.plot(df['Date'].values, df['Close'].values, color='skyblue', alpha=0.8)
     plt.xticks(rotation=90)
     plt.title(symbol, fontweight='bold')
     plt.xlabel('Date', fontweight='bold')
